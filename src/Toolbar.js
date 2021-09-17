@@ -5,6 +5,7 @@ import { Editor } from '@tinymce/tinymce-react';
 
 
 
+
 function Toolbar() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -14,6 +15,7 @@ function Toolbar() {
     const [content, setContent] = useState([]);
     const editorRef = useRef(null);
     // Functions for interacting with editor¨
+    
     function log() {
       let myContent = "";
       if (editorRef.current) {
@@ -24,6 +26,7 @@ function Toolbar() {
     };
 
     // GET all docs
+    
     useEffect(() => {
         fetch("https://jsramverk-editor-jopt19.azurewebsites.net/editor")
           .then(res => res.json())
@@ -38,21 +41,6 @@ function Toolbar() {
             }
           )
       }, [])
-      // GET one doc 
-      useEffect(() => {
-        fetch("https://jsramverk-editor-jopt19.azurewebsites.net" + window.location.pathname)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              setIsLoaded(true);
-              setItem(result);
-            },
-            (error) => {
-              setIsLoaded(true);
-              setError(error);
-            }
-          )
-      }, [])
 
     function createNewDoc() {
         let body = {
@@ -60,14 +48,18 @@ function Toolbar() {
             "name": name.name
         }
         let url = "https://jsramverk-editor-jopt19.azurewebsites.net/editor"
-        console.log(body)
+        
         fetch(url, {
             method: 'POST',
             headers: {"Content-type": 'application/json'},
             body: JSON.stringify(body)
-        }).then(response => response.json(204))
+        }).then(response => {
+          window.location.reload();
+          response.json(204)
+        })
+          
     }
-      function myNameChangeHandler(event) {
+    function myNameChangeHandler(event) {
         setName({name: event.target.value});
         
       }
@@ -77,7 +69,7 @@ function Toolbar() {
         setContent({content: EditorContent});
       }
 
-      function deleteDoc(){
+    function deleteDoc(){
 
         var id = window.location.pathname;
         id = id.substring(8);
@@ -93,20 +85,33 @@ function Toolbar() {
         })
     }
     function updateDoc() {
-        var id = window.location.pathname;
-        id = id.substring(8);
         let body = {
-            "id": id,
+            "id": item._id,
             "content": content.content,
             "name": name.name
         }
+      
         fetch("https://jsramverk-editor-jopt19.azurewebsites.net/editor", {
             method: 'PUT',
             body: JSON.stringify(body),
             headers: {"Content-type": 'application/json'},
         }).then(response => {
-            window.location.pathname.replace("");
+            window.location.reload();
         })
+    }
+    function getOneDoc(id){
+        fetch("https://jsramverk-editor-jopt19.azurewebsites.net/editor/" + id)
+          .then(res => res.json())
+          .then(
+            (result) => {
+              setIsLoaded(true);
+              setItem(result);
+            },
+            (error) => {
+              setIsLoaded(true);
+              setError(error);
+            }
+          )
     }
     
     return (
@@ -118,7 +123,7 @@ function Toolbar() {
             {items.map((data, key) => {
           return (
               <div key={key}>
-              <a href={"/editor/" + data._id}>{data.name}</a>
+                  <button onClick={() => getOneDoc(data._id)}>{data.name}</button>
               </div>
           );
         })}     <label>Namn: </label>
@@ -130,7 +135,7 @@ function Toolbar() {
                 <input type="button" value="Spara" className="toolbar" onClick={log}/>
                 <input type="button" value="Uppdatera" className="toolbar" onClick={updateDoc}/>
                 <input type="button" value="Skapa" className="toolbar" onClick={createNewDoc}/>
-                <input type="button" value="Ta bort" className="toolbar" onClick={deleteDoc}/>
+                {/**<input type="button" value="Ta bort" className="toolbar" onClick={deleteDoc}/>*/}
             
             
               <Editor
