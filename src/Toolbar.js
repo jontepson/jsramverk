@@ -119,7 +119,7 @@ function Toolbar() {
             
             {/**Toolbar buttons*/}
             
-            <h2>Redigera dokument: </h2>
+            <h2 data-testid="redigera">Redigera dokument: </h2>
             {items.map((data, key) => {
           return (
               <div key={key}>
@@ -132,9 +132,9 @@ function Toolbar() {
                     onChange={myNameChangeHandler}
                     />
                 
-                <input type="button" value="Spara" className="toolbar" onClick={log}/>
-                <input type="button" value="Uppdatera" className="toolbar" onClick={updateDoc}/>
-                <input type="button" value="Skapa" className="toolbar" onClick={createNewDoc}/>
+                <input type="button" data-testid="save" value="Spara" className="toolbar" onClick={log}/>
+                <input type="button" data-testid="update" value="Uppdatera" className="toolbar" onClick={updateDoc}/>
+                <input type="button" data-testid="create" value="Skapa" className="toolbar" onClick={createNewDoc}/>
                 {/**<input type="button" value="Ta bort" className="toolbar" onClick={deleteDoc}/>*/}
             
             
