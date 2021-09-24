@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Editor } from '@tinymce/tinymce-react';
 import socketIOClient from "socket.io-client";
 //const ENDPOINT = "http://127.0.0.1:1337";
-const ENDPOINT = "https://www.student.bth.se"
+const ENDPOINT = "https://jsramverk-editor-jopt19.azurewebsites.net";
 
 const socket = socketIOClient(ENDPOINT);
 
