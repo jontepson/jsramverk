@@ -5,8 +5,6 @@ import Header from './layout/header';
 import Footer from './layout/footer';
 import Toolbar from './Toolbar.js';
 
-
-
 function App() {
   return (
     <>

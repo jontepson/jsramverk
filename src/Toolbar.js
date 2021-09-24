@@ -2,7 +2,11 @@ import './App.css';
 import React, { useEffect, useRef, useState } from "react";
 
 import { Editor } from '@tinymce/tinymce-react';
+import socketIOClient from "socket.io-client";
+//const ENDPOINT = "http://127.0.0.1:1337";
+const ENDPOINT = "https://www.student.bth.se"
 
+const socket = socketIOClient(ENDPOINT);
 
 
 
@@ -14,8 +18,12 @@ function Toolbar() {
     const [name, setName] = useState([]);
     const [content, setContent] = useState([]);
     const editorRef = useRef(null);
-    // Functions for interacting with editor¨
-    
+    // Functions for interacting with editor"
+    socket.on("doc", (data) => {
+      if (editorRef.current) {
+        editorRef.current.setContent(data.content);
+      }
+    });
     function log() {
       let myContent = "";
       if (editorRef.current) {
@@ -23,9 +31,14 @@ function Toolbar() {
         myContent = editorRef.current.getContent();
       }
       return myContent;
-    };
-
-    // GET all docs
+    };/*
+    let body = {
+      "id": item._id,
+      "content": content.content,
+      "name": name.name
+    }
+    socket.emit("doc", body);
+    // GET all docs*/
     
     useEffect(() => {
         fetch("https://jsramverk-editor-jopt19.azurewebsites.net/editor")
@@ -61,13 +74,18 @@ function Toolbar() {
     }
     function myNameChangeHandler(event) {
         setName({name: event.target.value});
-        
       }
-
-      function myContentChangeHandler() {
+    function myContentChangeHandler() {
+      // onChange letar efter event, t.ex enter fungerar.
         var EditorContent = editorRef.current.getContent()
         setContent({content: EditorContent});
-      }
+        let body = {
+          "id": item._id,
+          "content": content.content,
+          "name": name.name
+        }
+        socket.emit("doc", body);  
+    }
 
     function deleteDoc(){
 
@@ -90,7 +108,6 @@ function Toolbar() {
             "content": content.content,
             "name": name.name
         }
-      
         fetch("https://jsramverk-editor-jopt19.azurewebsites.net/editor", {
             method: 'PUT',
             body: JSON.stringify(body),
@@ -104,8 +121,10 @@ function Toolbar() {
           .then(res => res.json())
           .then(
             (result) => {
+              socket.emit("create", id);
               setIsLoaded(true);
               setItem(result);
+              name.name = item.name
             },
             (error) => {
               setIsLoaded(true);
@@ -113,7 +132,6 @@ function Toolbar() {
             }
           )
     }
-    
     return (
         <>
             
@@ -128,6 +146,7 @@ function Toolbar() {
           );
         })}     <label>Namn: </label>
                     <input type="text"
+                    name="nameArea"
                     placeholder={item.name}
                     onChange={myNameChangeHandler}
                     />
@@ -142,7 +161,7 @@ function Toolbar() {
                apiKey='epvu53yulqfg70pfagqhz9nm0914ws2h220hgu39cnwkwnxb'
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue={item.content}
-                onSelectionChange={myContentChangeHandler}
+                onChange={myContentChangeHandler}
                 init={{
                   height: 500,
                   menubar: false,
