@@ -1,34 +1,169 @@
-#root {
-  width: 1000px;
-  text-align: center;
-  margin: auto;
+/*body type grid, 5 rows, header 1,  main 2-4 and footer 5*/
+body {
+  	display: grid;
+  	grid-template-columns: 1fr;
+  	grid-template-rows: repeat(5, 1fr);
+  	grid-column-gap: 0px;
+  	grid-row-gap: 0px;
+  	height: 100vh;
 }
-
+/** Root object, all content in root*/
+#root {
+  	width: 100%;
+  	text-align: center;
+  	height: 100vh;
+  	background-image: url('./img/backgroundImage.png');
+}
+/* HEADER DESIGN */
 .header {
-  background-color: orangered;
-  height: 100px;
-  width: 100%;
+  	grid-area: 1 / 1 / 2 / 2;
+  	color: rgba(0, 0, 0, 1);
+  	height: 15vh;
+  	width: 100%;
 }
 .header .logo {
-  background-color: orangered;
-  width: 140px;
-  height: 100px;
-  float: left;
-  z-index: 2;
+  	/*background-color: #3e4444;*/
+  	color: rgba(0, 0, 0, 1);
+  	width: 30%;
+  	height: 15vh;
+  	float: left;
+  	z-index: 2;
+  	margin-left: 35%;
 }
+
+/*MAIN DIV GRID */
+.mainDiv {
+  	grid-area: 2 / 1 / 5 / 2;
+  	height: 70vh;
+}
+
+/* Login page div that holds form */
+.loginDiv {
+  	width: 60vh;
+  	height: 70vh;
+  	position: absolute; /*Can also be `fixed`*/
+  	left: 0;
+  	right: 0;
+  	top: 0;
+  	bottom: 0;
+  	margin: auto;
+  	/*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
+  	max-width: 100%;
+  	max-height: 100%;
+  	overflow: auto;
+  	background: rgb(48,126,255);
+  	background: linear-gradient(171deg, rgba(48,126,255,1) 44%, rgba(19,217,251,1) 66%, rgba(255,255,255,1) 76%); 
+  	border-radius: 10%;
+}
+
+.loginDiv label {
+  	font-size: 25px;
+  	font-weight: 600;
+  	float: left;
+}
+.loginDiv .textinput {
+  	box-shadow: 1px 1px grey;
+  	font-size: 30px;
+}
+
+.loginDiv .Login {
+  	margin-top: 10px;
+  	box-shadow: 5px 3px grey;
+  	font-size: 40px;
+  	background: rgb(48,126,255);
+  	background: linear-gradient(343deg, rgba(48,126,255,1) 21%, rgba(19,217,251,1) 87%);
+}
+
+.loginForm {
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-49%, -49%);
+}
+
+
+/* toolbardiv over editor */
+.toolbarDiv .textinput {
+	box-shadow: 1px 1px grey;
+	font-size: 25px;
+}
+
+.toolbarDiv label {
+  	font-size: 40px;
+  	font-weight: 500;
+}
+
+/* toolbar buttons */
+.toolbar {
+  	color: white;
+  	background-color: #13B8FF;
+	font-size: 40px;
+  	margin: 10px 10px 10px 10px;
+  	border-radius: 5%;
+}
+
+.toolbar:hover {
+  	background-color: #555;
+  	color: white;
+}
+/* div that holds editor */
+.editorDiv {
+  	width: 60%;
+  	margin: auto;
+
+}
+
+/* Side navbar for my docs */
+.navbar {
+  	position: relative;
+  	color: rgba(0, 0, 0, 1);
+}
+
+.navbar ul {
+  	list-style-type: none;
+  	margin: 0;
+  	padding: 0;
+  	color: rgba(0, 0, 0, 1);
+  	height: 100%; /* Full height */
+  	position: fixed; /* Make it stick, even on scroll */
+  	overflow: auto; /* Enable scrolling if the side.navbar has too much content */
+}
+
+.navbar ul button {
+  	display: block;
+  	color: #fff;
+  	height: 50px;
+  	font-size: 40px;
+  	padding: 8px 16px;
+  	text-decoration: none;
+  	margin: 10px 10px 10px 10px;
+  	width: 240px;
+}
+
+.navbar ul button:hover {
+  	background-color: #555;
+  	color: white;
+}
+
+/* Footer, currently transparent */
 .footer {
-  background-color: orangered;
-  height: 80px;
-  width: 100%;
-  margin-top: 10%;
+ /* background: rgb(62,68,68);
+  background: radial-gradient(circle, rgba(62,68,68,1) 37%, rgba(62,34,34,1) 92%, rgba(255,255,255,1) 98%);*/
+  	color:rgba(0, 0, 0, 1);
+  	height: 15vh;
+  	width: 100%;
+  	grid-area: 5 / 1 / 6 / 2; 
+  	align-self: end; /* The trick */
 }
+
+/* basic react app style */ 
 .App {
-  text-align: center;
+  	text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  	height: 40vmin;
+  	pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -38,14 +173,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  	background-color: #282c34;
+  	min-height: 100vh;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	font-size: calc(10px + 2vmin);
+  	color: white;
 }
 
 .App-link {
@@ -61,9 +196,4 @@
   }
 }
 
-.toolbar {
-  color: white;
-  background-color: grey;
-  font-size: 40px;
-  margin: 10px 10px 10px 10px;
-}
+
