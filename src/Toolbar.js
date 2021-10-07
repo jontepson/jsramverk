@@ -59,6 +59,32 @@ function Toolbar(props) {
             }
           )
       }, [])*/
+	function getUsersDocsGraphQL() {
+		let GraphQLQuery = { query: '{ Usersdoc(user: "' + user + '") { name, content, valid_users, _id } }' }
+		//fetch("http://localhost:1337/graphql", {
+		fetch("https://jsramverk-editor-jopt19.azurewebsites.net/graphql", {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json',
+		  'Accept': 'application/json',
+		  "x-access-token": token
+		},
+		body: JSON.stringify(GraphQLQuery)
+	  })
+		.then(r => r.json())
+		.then(
+		  (result) => {
+			setIsLoaded(true);
+			//console.log(result.data)
+			setItems(result.data.Usersdoc);
+		  	//console.log(items)
+			},
+		  (error) => {
+			setIsLoaded(true);
+			setError(error);
+		  }
+		)
+	}
 	function getUsersDocs() {
         let body = {
             "user": user
@@ -101,9 +127,9 @@ function Toolbar(props) {
             headers: {"Content-type": 'application/json', "x-access-token": token},
             body: JSON.stringify(body)
         }).then(response => {
-          	alert("Document created")
-			getUsersDocs()
-          	response.json(204)
+          	alert("Document created");
+			      getUsersDocs();
+          	response.json(204);
         })
     }
     function myNameChangeHandler(event) {
@@ -143,6 +169,7 @@ function Toolbar(props) {
             "name": name.name,
             "valid_users": [user, "admin@admin.se"]
         }
+		console.log(body)
         fetch("https://jsramverk-editor-jopt19.azurewebsites.net/editor", {
             method: 'PUT',
             body: JSON.stringify(body),
@@ -151,6 +178,35 @@ function Toolbar(props) {
 			getUsersDocs()
         })
     }
+
+    function getOneGraphQL(id) {
+		let GraphQLQuery = { query: '{ OneDoc(id: "' + id + '") { _id, name, content } }' }
+		//console.log(GraphQLQuery)
+		fetch("https://jsramverk-editor-jopt19.azurewebsites.net/graphql", {
+      	method: 'POST',
+      	headers: {
+        	'Content-Type': 'application/json',
+        	'Accept': 'application/json',
+			"x-access-token": token
+      	},
+      	body: JSON.stringify(GraphQLQuery)
+    	})
+      	.then(r => r.json())
+      	.then(
+        	(result) => {
+          	socket.emit("create", id);
+          	setIsLoaded(true);
+          	console.log(result.data.OneDoc.name)
+          	setName({name: result.data.OneDoc.name});
+          	setItem(result.data.OneDoc);
+			console.log(item)
+        	},
+        	(error) => {
+          	setIsLoaded(true);
+          	setError(error);
+        	}
+      	)
+	}
     function getOneDoc(id){
         fetch("https://jsramverk-editor-jopt19.azurewebsites.net/editor/" + id)
         //fetch("http://localhost:1337/editor/" + id)
@@ -159,7 +215,7 @@ function Toolbar(props) {
             (result) => {
               socket.emit("create", id);
               setIsLoaded(true);
-              console.log(result.name)
+              console.log(result)
               setName({name: result.name});
               setItem(result);
             },
@@ -180,14 +236,14 @@ function Toolbar(props) {
 					<h2 data-testid="redigera">Redigera dokument: </h2>
 					{items.map((data, key) => {
 				  return (
-						<button class="toolbar" onClick={() => getOneDoc(data._id)}>{data.name}</button>
+						<button class="toolbar" onClick={() => getOneGraphQL(data._id)}>{data.name}</button>
 				  );
 				})}
 				</ul>
 				</div> 
 				<div class="toolbarDiv">
 				<label>Namn: </label>
-						<input type="text" name="nameArea" class="textinput" value={item.name}/*placeholder={item.name}*/ onChange={myNameChangeHandler}/>
+						<input type="text" name="nameArea" class="textinput" placeholder={item.name} onChange={myNameChangeHandler}/>
 						
 						<input type="button" data-testid="save" value="Spara" className="toolbar" onClick={log}/>
 						<input type="button" data-testid="update" value="Uppdatera" className="toolbar" onClick={updateDoc}/>
@@ -226,12 +282,12 @@ function Toolbar(props) {
             {/**Toolbar buttons*/}
 			<div class="navbar">
             	<ul>
-					<button data-testid="getMyDocs" value="My docs" className="toolbar" onClick={getUsersDocs}>My docs</button>
+					<button data-testid="getMyDocs" value="My docs" className="toolbar" onClick={getUsersDocsGraphQL}>My docs</button>
             	</ul>
         	</div>
 			<div class="toolbarDiv">
                <label>Namn: </label>
-                    <input type="text" name="nameArea" class="textinput"  placeholder={item.name} onChange={myNameChangeHandler}/>
+                    <input type="text" name="nameArea" class="textinput" placeholder={item.name} onChange={myNameChangeHandler}/>
                 
                 <input type="button" data-testid="save" value="Spara" className="toolbar" onClick={log}/>
                 <input type="button" data-testid="update" value="Uppdatera" className="toolbar" onClick={updateDoc}/>
