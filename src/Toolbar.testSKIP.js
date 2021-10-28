@@ -6,7 +6,7 @@ import Toolbar from './Toolbar';
 
 describe('Save', () => {
   test('Tests that save buttons text is "Spara"', () => {
-    render(<Toolbar/>);
+    render(<Toolbar />);
         expect(screen.getByTestId("save")).toHaveValue("Spara");
   });
 });  

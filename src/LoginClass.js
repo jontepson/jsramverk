@@ -2,6 +2,7 @@
 import './App.css';
 import React, { useEffect, useRef, useState } from "react";
 import Toolbar from './Toolbar.js';
+import ToolbarClass from './ToolbarV2';
 //import { ToolbarClass }from './ToolbarClass';
 //url for local or production
 
@@ -21,25 +22,33 @@ class LoginClass extends React.Component {
         this.userSignUp = this.userSignUp.bind(this)
         this.userLogin = this.userLogin.bind(this)
     }
+
+    /// not in use
     getToken() {
         return this.state.token
     }
+    //not in use
     getEmail() {
         return this.state.user
     }
+
+
+    ///
+    ///
+    /// HANDLERS
+    ///
+    ///
     myEmailChangeHandler(event) {
-        // Works
         this.setState({email: event.target.value});
     }
     myPasswordChangeHandler(event) {
-      // onChange letar efter event, t.ex enter fungerar.
-      //Works
         this.setState({password: event.target.value});
     }
+
     userSignUp() {
         // create a new user in database
         // kryptera lösenord först.
-            // spara lösenord i databasen.
+        // spara lösenord i databasen.
             let body = {
                 "email": this.state.email,
                 "password": this.state.password
@@ -55,10 +64,8 @@ class LoginClass extends React.Component {
                 window.location.reload();
                 response.json(204)
             })
-            // RESETS PASSWORD AND EMAIL
-            //setPassword({password: ""});
-            //setEmail({email: ""});
     }
+
     userLogin() {
         // check if user in database and login if he should have access
         // lägga in i backend en möjlighet att logga in och signup
@@ -95,14 +102,17 @@ class LoginClass extends React.Component {
 
     
     render() {
+
+        /// If login is success change view
         if (this.state.token !== "" && this.state.user !== "") {
-            //console.log(this.state.user)
+            <Toolbar token={this.state.token} user={this.state.user}/>
             return (
                 <>
-                    <Toolbar token={this.state.token} user={this.state.user}/>
+                    <ToolbarClass token={this.state.token} user={this.state.user}/>
                 </>
             )
         }
+        /// STARTPAGE
         return (
             <>
             <div class="mainDiv">
