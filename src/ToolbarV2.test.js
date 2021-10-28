@@ -39,7 +39,6 @@ describe('Testing that the buttons fire the functions', () => {
             component = shallow(<ToolbarV2/>)
             
             expect(component.find(".Editor").length).toBe(1);
-            
         });
 
         it('Test that codemirror is active after button is clicked', () => {
@@ -67,6 +66,4 @@ describe('Testing that the buttons fire the functions', () => {
             input.simulate('click')
             expect(spy).toHaveBeenCalledTimes(1);
         });
-
-        
-});  
+});

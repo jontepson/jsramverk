@@ -26,6 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --detectOpenHandles",
+    "testTravis": "react-scripts test --watchAll=false --forceExit",
     "eject": "react-scripts eject",
     "deploy": "npm run build && chmod -R 777 build && rsync -av --delete build/ jopt19@ssh.student.bth.se:www/editor"
   },
