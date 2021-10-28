@@ -71,7 +71,7 @@ class ToolbarClass extends React.Component {
 	}
 
 	//SEND MAIL
-    sendMail(receiver, item){
+    sendMail = (receiver, item) => {
       const msg = {
         to: receiver,
         from: 'jopt19@hackermail.com',
@@ -94,7 +94,10 @@ class ToolbarClass extends React.Component {
             headers: {"Content-type": 'application/json'}
         }).then(res => {
           console.log("Invite send");
-        })
+        }),
+		(error) => {
+		  console.log(error)
+		}
         let body = {
           "id": item._id,
           "content": item.content,
@@ -108,7 +111,10 @@ class ToolbarClass extends React.Component {
           headers: {"Content-type": 'application/json', "x-access-token": this.state.token},
         }).then(response => {
           alert(receiver + " now has access to this doc")
-      })
+      }),
+	  (error) => {
+		console.log(error)
+	  }
     }
 	//LOG EDITORCONTENT IN CONSOLE
 	log = (editorContent) => {
@@ -172,7 +178,10 @@ class ToolbarClass extends React.Component {
 			  	headers: {"Content-type": 'application/json', "x-access-token": token},
 		  }).then(response => {
 			  	this.getUsersDocsGraphQL(user, mode, token)
-		  })
+		  }),
+		  (error) => {
+			console.log(error)
+		  }
 	}
 
 	getOneGraphQL = (id, token) => {
@@ -228,7 +237,10 @@ class ToolbarClass extends React.Component {
           	alert("Document created");
 			this.getUsersDocsGraphQL(user, mode, token);
           	response.json(204);
-        })
+        }),
+		(error) => {
+		  console.log(error)
+		}
     }
 
 	///
