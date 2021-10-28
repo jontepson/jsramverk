@@ -20,7 +20,7 @@ describe('Testing that the buttons fire the functions', () => {
 
             input = component.find(".pdf")
             input.simulate('click')
-            expect(spy).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalledTimes(1);
         });
 
         it('Test that send invite button excecute sendMail function, The rest is tested in backend', () => {
@@ -32,25 +32,26 @@ describe('Testing that the buttons fire the functions', () => {
             input = component.find(".invite")
             
             input.simulate('click')
-            expect(spy).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalledTimes(1);
         });
 
         it('Test that codemirror is not active at start', () => {
-            const { container } = render(<ToolbarV2/>)
+            component = shallow(<ToolbarV2/>)
             
-            expect(container.getElementsByClassName("Editor").length).toBe(1);
+            expect(component.find(".Editor").length).toBe(1);
             
         });
 
         it('Test that codemirror is active after button is clicked', () => {
             component = shallow(<ToolbarV2/>)
             instance = component.instance();
-            expect(component.find("CodeMirror").length).toBe(0);
-            expect(component.find("Editor").length).toBe(1);
+            expect(component.find(".CodeMirror").length).toBe(0);
+            expect(component.find(".Editor").length).toBe(1);
             input = component.find(".mode")
             
+
             input.simulate('click');
-            expect(component.find("Editor").length).toBe(0);
+            expect(component.find(".CodeMirror").length).toBe(1);
         });
 
         it('Test that runCode is excecuted after button is pressed', () => {
@@ -64,7 +65,7 @@ describe('Testing that the buttons fire the functions', () => {
 
             input = component.find(".runCode")
             input.simulate('click')
-            expect(spy).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalledTimes(1);
         });
 
         

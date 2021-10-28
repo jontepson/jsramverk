@@ -316,29 +316,29 @@ class ToolbarClass extends React.Component {
 				//console.log(this.state.item)
 			  	return (
 					  	<>
-						<div class="mainDiv">
+						<div className="mainDiv">
 						  {/**Toolbar buttons*/}
 						  
-						  	<div class="navbar">
+						  	<div className="navbar">
 						  		<ul>
 						  			<h2 data-testid="redigera">Redigera dokument: </h2>
 						  			{this.state.items.map((data, key) => {
 										return (
-							  				<button class="toolbar" onClick={() => this.getOneGraphQL(data._id, this.props.token)}>{data.name}</button>
+							  				<button className="toolbar" onClick={() => this.getOneGraphQL(data._id, this.props.token)}>{data.name}</button>
 										);
 					 				 })}
 					  			</ul>
 					  		</div> 
-					  	<div class="toolbarDiv">
+					  	<div className="toolbarDiv">
 					  		<label>Namn: </label>
-							  	<input type="text" name="nameArea" class="textinput" placeholder={this.state.item.name} onChange={this.myNameChangeHandler}/>
+							  	<input type="text" name="nameArea" className="textinput" placeholder={this.state.item.name} onChange={this.myNameChangeHandler}/>
 							  	<input type="button" value="Run code" className="toolbar" onClick={() => this.runCode(this.state.content)}/>
 							  	<input type="button" data-testid="update" value="Uppdatera" className="toolbar" onClick={() => this.updateDoc(this.state.item, this.props.token, this.state.content, this.state.name, this.state.mode, this.props.user)}/>
 							  	<input type="button" data-testid="create" value="Skapa" className="toolbar" onClick={() => this.createNewDoc(this.state.content, this.state.name, this.props.user, this.state.mode, this.props.token)}/>
 						  		{/**<input type="button" data-testid="create" value="Spara som PDF" className="toolbar" onClick={saveAsPDF}/>*/}
 					  	</div>
 							  {/**<input type="button" value="Ta bort" className="toolbar" onClick={deleteDoc}/>*/}
-						<div class="editorDiv">
+						<div className="editorDiv">
 							<CodeMirror
 					  			value="something else"
 					  			onChange={this.updateCode}
@@ -350,28 +350,28 @@ class ToolbarClass extends React.Component {
 								this.setState({items: ""})
 				  			}}/>
 				  			<input type="button" value="Send Invite" className="toolbar" onClick={() => this.sendMail(this.state.receiver, this.state.item)}></input>
-							<input type="email" name="email" class="textinput" onChange={this.myEmailReceiverChangeHandler}></input>
+							<input type="email" name="email" className="textinput" onChange={this.myEmailReceiverChangeHandler}></input>
 				  		</div>
 					  	</>
 				);
 		  	}
 			return (
 			  	<>
-		  		<div class="mainDiv">
+		  		<div className="mainDiv">
 				  	{/**Toolbar buttons*/}
-					<div class="navbar">
+					<div className="navbar">
 						<ul>
 							<button data-testid="getMyDocs" value="My docs" className="toolbar" onClick={() => this.getUsersDocsGraphQL(this.props.user, this.state.mode, this.props.token)}>My docs</button>
 						</ul>
 					</div>
-					<div class="toolbarDiv">
+					<div className="toolbarDiv">
 					 	<label>Namn: </label>
-						 	<input type="text" name="nameArea" class="textinput" onChange={this.myNameChangeHandler}/>
+						 	<input type="text" name="nameArea" className="textinput" onChange={this.myNameChangeHandler}/>
 							<input type="button" value="Run code" className="toolbar runCode" onClick={() => this.runCode(this.state.content)}/>
 						  	<input type="button" data-testid="update" value="Uppdatera" className="toolbar" onClick={() => this.updateDoc(this.state.item, this.props.token, this.state.content, this.state.name, this.state.mode, this.props.user)}/>
 						  	<input type="button" data-testid="create" value="Skapa" className="toolbar" onClick={() => this.createNewDoc(this.state.content, this.state.name, this.props.user, this.state.mode, this.props.token)}/>
 					</div>
-					<div class="editorDiv CodeMirror">
+					<div className="editorDiv CodeMirror">
 						<CodeMirror
 			  				value="console.log('Welcome to the code editor');"
 			  				onChange={this.updateCode}
@@ -384,7 +384,7 @@ class ToolbarClass extends React.Component {
 						this.setState({items: ""})
 				  	}}/>
 				  	<input type="button" value="Send Invite" className="toolbar" onClick={() => this.sendMail(this.state.receiver, this.state.item)}></input>
-					  <input type="email" name="email" class="textinput" onChange={this.myEmailReceiverChangeHandler}></input>
+					  <input type="email" name="email" className="textinput" onChange={this.myEmailReceiverChangeHandler}></input>
 		 	 	</div>
 			 	</>
 			);
@@ -404,29 +404,29 @@ class ToolbarClass extends React.Component {
 			
 			return (
 					<>
-					<div class="mainDiv">
+					<div className="mainDiv">
 						{/**Toolbar buttons*/}
 							
-						<div class="navbar">
+						<div className="navbar">
 							<ul>
 								<h2 data-testid="redigera">Redigera dokument: </h2>
 									{this.state.items.map((data, key) => {
 						  				return (
-											<button class="toolbar" onClick={() => this.getOneGraphQL(data._id, this.props.token)}>{data.name}</button>
+											<button className="toolbar" onClick={() => this.getOneGraphQL(data._id, this.props.token)}>{data.name}</button>
 						  				);
 									})}
 							</ul>
 						</div>
-						<div class="toolbarDiv">
+						<div className="toolbarDiv">
 							<label>Namn: </label>
-								<input type="text" name="nameArea" class="textinput" placeholder={this.state.item.name} onChange={this.myNameChangeHandler}/>
+								<input type="text" name="nameArea" className="textinput" placeholder={this.state.item.name} onChange={this.myNameChangeHandler}/>
 								<input type="button" data-testid="save" value="Log" className="toolbar" onClick={() => this.log(this.state.editorContent)}/>
 								<input type="button" data-testid="update" value="Uppdatera" className="toolbar" onClick={() => this.updateDoc(this.state.item, this.props.token, this.state.editorContent, this.state.name, this.state.mode, this.props.user)}/>
 								<input type="button" data-testid="create" value="Skapa" className="toolbar" onClick={() => this.createNewDoc(this.state.editorContent, this.state.name, this.props.user, this.state.mode, this.props.token)}/>
 								<input type="button" data-testid="PDF" value="Spara som PDF" className="toolbar" onClick={() => this.saveAsPDF(this.state.editorContent, this.state.name)}/>
 						</div>
 								{/**<input type="button" value="Ta bort" className="toolbar" onClick={deleteDoc}/>*/}
-						<div class="editorDiv">
+						<div className="editorDiv">
 							  <Editor
 							   apiKey='epvu53yulqfg70pfagqhz9nm0914ws2h220hgu39cnwkwnxb'
 								initialValue={this.state.item.content}
@@ -452,23 +452,23 @@ class ToolbarClass extends React.Component {
 					  		this.setState({items: ""})
 						}}/>
 						<input type="button" value="Send Invite" className="toolbar" onClick={() => this.sendMail(this.state.receiver, this.state.item)}></input>
-						<input type="email" name="email" class="textinput" onChange={this.myEmailReceiverChangeHandler}></input>
+						<input type="email" name="email" className="textinput" onChange={this.myEmailReceiverChangeHandler}></input>
 					</div>
 					</>
 			);
 		}
 			return (
 				<>
-				<div class="mainDiv">
+				<div className="mainDiv">
 					{/**Toolbar buttons*/}
-					<div class="navbar">
+					<div className="navbar">
 						<ul>
 							<button data-testid="getMyDocs" value="My docs" className="toolbar" onClick={() => this.getUsersDocsGraphQL(this.props.user, this.state.mode, this.props.token)}>My docs</button>
 						</ul>
 					</div>
-					<div class="toolbarDiv">
+					<div className="toolbarDiv">
 					   	<label>Namn: </label>
-						<input type="text" name="nameArea" class="textinput" placeholder={this.state.item.name} onChange={this.myNameChangeHandler}/>
+						<input type="text" name="nameArea" className="textinput" placeholder={this.state.item.name} onChange={this.myNameChangeHandler}/>
 						
 						<input type="button" data-testid="save" value="Log" className="toolbar" onClick={() => this.log(this.state.editorContent)}/>
 						<input type="button" data-testid="update" value="Uppdatera" className="toolbar" onClick={() => this.updateDoc(this.state.item, this.props.token, this.state.editorContent, this.state.name, this.state.mode, this.props.user)}/>
@@ -476,7 +476,7 @@ class ToolbarClass extends React.Component {
 						<input type="button" data-testid="PDF" value="Spara som PDF" className="toolbar pdf" onClick={() => this.saveAsPDF(this.state.editorContent, this.state.name)}/>
 						{/**<input type="button" value="Ta bort" className="toolbar" onClick={deleteDoc}/>*/}
 					</div>
-					<div class="editorDiv Editor">
+					<div className="editorDiv Editor">
 					  <Editor
 					   	apiKey='epvu53yulqfg70pfagqhz9nm0914ws2h220hgu39cnwkwnxb'
 						initialValue={this.state.item.content}

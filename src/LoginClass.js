@@ -115,17 +115,17 @@ class LoginClass extends React.Component {
         /// STARTPAGE
         return (
             <>
-            <div class="mainDiv">
-                    <div class="loginDiv">
-                        <div class="loginForm">
+            <div className="mainDiv">
+                    <div className="loginDiv">
+                        <div className="loginForm">
                         <h1> Log in to get started!</h1>
-                        <label for="email">Email:</label>
+                        <label>Email:</label>
                         <br></br>
-                        <input type="email" name="email" class="textinput" onChange={this.myEmailChangeHandler}></input>
+                        <input type="email" name="email" className="textinput" onChange={this.myEmailChangeHandler}></input>
                         <br></br>
-                        <label for="password">Password:</label>
+                        <label>Password:</label>
                         <br></br>
-                        <input type="password" name="password" class="textinput"  onChange={this.myPasswordChangeHandler}></input>
+                        <input type="password" name="password" className="textinput"  onChange={this.myPasswordChangeHandler}></input>
                         <br></br>
                         <input type="button" data-testid="userLogin" value="Login" className="Login" onClick={this.userLogin}/>
                         <h3>or</h3>
